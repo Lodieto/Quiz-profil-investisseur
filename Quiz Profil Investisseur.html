@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quiz Profil Investisseur · Méthode Lleco</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="quiz-data.jsx"></script>
+<script type="text/babel" src="quiz-engine.jsx"></script>
+<script type="text/babel" src="quiz-intro.jsx"></script>
+<script type="text/babel" src="quiz-screen.jsx"></script>
+<script type="text/babel" src="quiz-results.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useMemo } = React;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "vibe": "clinique",
+  "accentHex": "#a8e2d2",
+  "density": 1
+}/*EDITMODE-END*/;
+
+const ACCENT_BY_HEX = {
+  '#a8e2d2': 'turquoise',
+  '#bfdf95': 'green',
+  '#f4be8e': 'orange',
+};
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [stage, setStage] = useState('intro'); // intro | quiz | results
+  const [answers, setAnswers] = useState(() => {
+    try {
+      const saved = localStorage.getItem('lleco_quiz_answers');
+      return saved ? JSON.parse(saved) : {};
+    } catch { return {}; }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('lleco_quiz_answers', JSON.stringify(answers));
+  }, [answers]);
+
+  const data = window.QUIZ_DATA;
+  const { calculateResults } = window.QUIZ_ENGINE;
+
+  const result = useMemo(() => {
+    if (Object.keys(answers).length < 25) return null;
+    return calculateResults(answers, data);
+  }, [answers]);
+
+  const goStart = () => setStage('quiz');
+  const goResults = () => { if (result) setStage('results'); };
+  const restart = () => {
+    if (!confirm("Refaire le quiz ? Vos réponses actuelles seront effacées.")) return;
+    setAnswers({});
+    setStage('intro');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [stage]);
+
+  // Apply tweaks at runtime
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.vibe = t.vibe;
+    root.dataset.accent = ACCENT_BY_HEX[t.accentHex] || 'turquoise';
+    root.style.setProperty('--density', t.density);
+  }, [t.vibe, t.accentHex, t.density]);
+
+  return (
+    <div className="app-shell">
+      <header className="app-nav">
+        <div className="nav-brand">
+          <span className="logo-l">L</span>
+          <span><span className="ll">Ll</span><span className="e">e</span><span className="ll">co</span></span>
+          <span className="nav-tagline">· Quiz Profil Investisseur</span>
+        </div>
+        <div className="nav-meta">
+          <span>Méthode Lleco</span>
+        </div>
+      </header>
+
+      {stage === 'intro' && <window.Intro onStart={goStart} />}
+      {stage === 'quiz' && (
+        <window.Quiz
+          data={data}
+          answers={answers}
+          setAnswers={setAnswers}
+          onDone={goResults}
+          onBack={() => setStage('intro')}
+        />
+      )}
+      {stage === 'results' && result && (
+        <window.Results data={data} result={result} onRestart={restart} />
+      )}
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="Direction" />
+        <TweakRadio label="Vibe" value={t.vibe}
+          options={[
+            { value: 'clinique',  label: 'Clinique' },
+            { value: 'tactique',  label: 'Tactique' },
+            { value: 'editorial', label: 'Éditorial' }
+          ]}
+          onChange={(v) => setTweak('vibe', v)} />
+        <TweakColor label="Accent dominant" value={t.accentHex}
+          options={['#a8e2d2', '#bfdf95', '#f4be8e']}
+          onChange={(v) => setTweak('accentHex', v)} />
+        <TweakSection label="Rythme" />
+        <TweakSlider label="Densité" value={t.density}
+          min={0.7} max={1.4} step={0.05}
+          format={(v) => v < 0.85 ? 'Dense' : v > 1.15 ? 'Aéré' : 'Standard'}
+          onChange={(v) => setTweak('density', v)} />
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+MÉTHODE Lleco
+Quiz Profil Investisseur
+Documentation complète pour recréation en application
+
+1. Présentation
+Quiz de profilage psychologique d'investisseur basé sur le modèle Big Five (OCEAN), conçu par une psychologue agréée.
+25 questions · 5 dimensions · ~15 minutes
+Ce que l'utilisateur obtient :
+Son profil combiné (dominant + secondaire)
+Un radar de résistance à 7 biais cognitifs
+Des points de vigilance personnalisés
+
+2. Les 25 Questions
+Échelle de réponse : 1 = Pas du tout d'accord  ·  2 = Plutôt pas d'accord  ·  3 = Neutre  ·  4 = Plutôt d'accord  ·  5 = Tout à fait d'accord
+Dimension O — Ouverture
+Q1  Je suis attiré(e) par les secteurs d'investissement émergents et volatils (crypto, tech de pointe).
+Q2  Je suis prêt(e) à explorer de nouveaux narratifs de marché en dehors de mon domaine d'expertise.
+Q3  Avant d'investir, j'analyse en profondeur pour comprendre les nouveaux projets ou technologies.
+Q4  Je continue à suivre des projets intéressants même en l'absence d'opportunités à court terme.
+Q5  Je suis capable de m'engager dans des projets innovants en acceptant une réalisation potentielle sur plusieurs années.
+Dimension C — Conscienciosité
+Q6  Avant de prendre des positions, je fixe des objectifs clairs et un horizon temporel précis.
+Q7  J'analyse les fondamentaux et l'historique de l'actif avant de prendre des positions.
+Q8  J'ajuste régulièrement mon portefeuille en fonction de l'évolution du marché et de mes objectifs.
+Q9  Je tiens un journal de mes décisions d'investissement (raisons d'achat/vente, raisonnement).
+Q10  Avant chaque décision, je suis un processus prédéfini (checklist, critères, cadre d'analyse).
+Dimension E — Extraversion
+Q11  Je participe activement à des communautés ou groupes de discussion liés à l'investissement.
+Q12  J'apprécie les échanges avec d'autres investisseurs lors de la construction de ma stratégie.
+Q13  Les opinions de mon entourage ou de ma communauté influencent mes décisions d'investissement.
+Q14  J'ai besoin de partager mes trades ou découvertes avec mon entourage ou sur les réseaux sociaux.
+Q15  L'énergie collective lors des phases de marché à forte activité me stimule.
+Dimension A — Agréabilité
+Q16  Avant mes décisions, je tiens compte des conseils de mon entourage (amis, famille, communauté).
+Q17  Je tends à investir dans des projets à impact positif (social, environnemental, tech) au-delà du seul rendement.
+Q18  Je préfère les projets avec collaboration ou partage des résultats avec d'autres investisseurs.
+Q19  Lors de désaccords avec d'autres investisseurs, je cherche à comprendre leurs points de vue divergents.
+Q20  La dimension communautaire (qualité, engagement des membres) influence ma décision d'investissement.
+Dimension N — Névrosisme
+Q21  Je ressens de l'anxiété quand la valeur de mon portefeuille fluctue fortement.
+Q22  Je suis mal à l'aise avec des positions à risque élevé, même si le potentiel de rendement est important.
+Q23  Mes émotions me poussent à modifier mes décisions d'investissement (vente prématurée, réduction d'exposition).
+Q24  La performance de mon portefeuille affecte mon sommeil, mon humeur ou mon bien-être quotidien.
+Q25  Je ressens de l'anxiété ou le besoin de vérifier mes positions quand je suis éloigné(e) du marché plusieurs jours.
+
+3. Algorithme de Scoring
+Étape 1 — Moyenne par dimension
+Score O = moyenne(Q1, Q2, Q3, Q4, Q5)
+Score C = moyenne(Q6, Q7, Q8, Q9, Q10)
+Score E = moyenne(Q11, Q12, Q13, Q14, Q15)
+Score A = moyenne(Q16, Q17, Q18, Q19, Q20)
+Score N = moyenne(Q21, Q22, Q23, Q24, Q25)
+Étape 2 — Distance euclidienne aux profils types
+Pour chaque profil type, calculer :
+distance = √( (O-Oi)² + (C-Ci)² + (E-Ei)² + (A-Ai)² + (N-Ni)² )
+Étape 3 — Attribution du profil
+Trier les profils par distance croissante
+Profil dominant = le plus proche (1er)
+Profil secondaire = le 2ème plus proche
+Résultat affiché : DOMINANT · SECONDAIRE (ex : CONSERVATEUR · VISIONNAIRE)
+
+4. Les 5 Profils de Base
+Coordonnées OCEAN (valeurs cibles)
+Profil
+O
+C
+E
+A
+N
+Le Visionnaire
+5
+1.5
+3
+3
+3
+Le Spéculateur
+4
+2
+4
+2
+4
+L'Analyste
+3
+5
+3
+3
+2
+Le Conservateur
+1
+4
+2
+3
+3.5
+L'Enthousiaste
+4
+2
+5
+3
+3
+Le Visionnaire — Pionnier des marchés de demain
+Tu perçois les opportunités avant les autres. Ta capacité à anticiper les mégatendances et à t'engager sur le long terme est ton atout majeur. Tu investis avec conviction dans ce que le marché n'a pas encore compris.
+Points forts : Vision long terme · Tolérance à la volatilité · Pensée contrariante
+Le Spéculateur — Chasseur d'opportunités à fort impact
+Tu vis au rythme des marchés. Réactif et agile, tu sais saisir les opportunités quand elles se présentent. Le momentum est ta langue natale et tu prospères dans les phases d'accélération.
+Points forts : Réactivité · Agilité tactique · Lecture du momentum
+L'Analyste — La rigueur comme avantage compétitif
+Tu ne laisses rien au hasard. Méthodique et discipliné, tu construis tes positions sur des bases solides. Là où les autres voient du bruit, tu identifies du signal. Ta force : la constance.
+Points forts : Rigueur analytique · Discipline émotionnelle · Processus décisionnel structuré
+Le Conservateur — La préservation du capital avant tout
+Ta priorité absolue : ne pas perdre. Tu construis sur des bases sûres, préfères la régularité à la performance spectaculaire, et dors bien la nuit. Dans les marchés baissiers, tu es celui qui survit.
+Points forts : Gestion du risque · Sérénité dans la volatilité · Capital préservé pour les opportunités
+L'Enthousiaste — Le moteur social de l'investissement
+Tu es branché(e) sur le pouls de la communauté. Tu détectes les narratifs émergents tôt, tu fédères autour de tes convictions et tu sais quand l'énergie collective tourne. Ton réseau est ton actif le plus précieux.
+Points forts : Détection précoce des narratifs · Intelligence collective · Énergie et leadership
+
+5. Les 7 Biais Cognitifs Mesurés
+Scores de résistance : 0 = très vulnérable → 10 = très résistant
+1. FOMO
+2. Disponibilité
+3. Aversion perte
+4. Excès confiance
+5. Ancrage
+6. Confirmation
+7. Coûts irrécupérables
+
+6. Profils Combinés — Scores & Vigilance
+Format des scores : [FOMO, Disponibilité, Aversion perte, Excès confiance, Ancrage, Confirmation, Coûts irrécupérables]
+Profil combiné
+FOMO
+Disponibilité
+Aversion perte
+Excès confiance
+Ancrage
+Confirmation
+Coûts irrécupérables
+Points de vigilance
+Visionnaire (seul)
+7
+7
+5
+4
+3
+2
+2
+Particulièrement exposé au biais de confirmation et aux coûts irrécupérables. Sa conviction — force à l'entrée — devient un piège quand les fondamentaux se dégradent. Garde-fous : critères d'invalidation définis à froid et sources qui challengent la thèse.
+Analyste (seul)
+7
+6
+6
+3
+3
+3
+5
+Particulièrement exposé à l'excès de confiance, à l'ancrage technique et au biais de confirmation. Sa maîtrise méthodologique filtre les signaux fondamentaux. Garde-fous : contrôle fondamental systématique et marges d'erreur intégrées.
+Conservateur (seul)
+8
+3
+3
+7
+5
+5
+7
+Particulièrement exposé au biais de disponibilité et à l'aversion à la perte. Sa prudence produit de l'inaction. Garde-fous : routine de suivi régulière et règles d'ajustement d'exposition prédéfinies.
+Enthousiaste (seul)
+2
+2
+3
+2
+4
+3
+4
+Exposé à l'ensemble des biais — FOMO, excès de confiance, biais de disponibilité. Son ouverture d'esprit opère sans cadre analytique. Garde-fous : exposition conservatrice, sizing minimal, journalisation systématique.
+Spéculateur (seul)
+2
+3
+4
+3
+5
+5
+6
+Particulièrement exposé au FOMO et à l'excès de confiance. Sa réactivité court-circuite l'analyse. Garde-fous : nombre max de positions défini à l'avance et règle de prise de profits systématique.
+Visionnaire · Spéculateur
+5
+5
+4
+3
+4
+3
+4
+Conviction + réactivité amplifient l'excès de confiance et le biais de confirmation. Garde-fous : sizing strict, règle de prise de profits systématique et critères d'invalidation à froid.
+Spéculateur · Visionnaire
+4
+5
+5
+4
+4
+4
+4
+Profil équilibré mais sans point fort marqué. Le FOMO reste le point faible. Garde-fous : nombre max de positions et délai de réflexion avant chaque entrée.
+Visionnaire · Analyste
+7
+6
+6
+3
+2
+2
+3
+Double rigidité — vulnérabilité critique au biais de confirmation et à l'ancrage. Garde-fous : sources contradictoires systématiques et marges d'erreur intégrées.
+Analyste · Visionnaire
+7
+7
+5
+4
+2
+1
+4
+Biais de confirmation au plancher (1/10). Combinaison la plus imperméable à la remise en question. Garde-fous : protocole de remise en question périodique et critères d'invalidation non négociables.
+Visionnaire · Conservateur
+8
+5
+4
+5
+4
+3
+4
+Forte résistance au FOMO. Le biais de confirmation reste le point faible. Garde-fous : critères d'invalidation et routine de suivi régulière.
+Conservateur · Visionnaire
+8
+5
+4
+6
+4
+4
+5
+Bien protégé contre FOMO et excès de confiance. L'aversion à la perte et l'ancrage peuvent produire de l'inaction prolongée. Garde-fous : règles d'ajustement d'exposition prédéfinies.
+Visionnaire · Enthousiaste
+5
+5
+4
+3
+4
+2
+3
+Très exposé au biais de confirmation. Attachement émotionnel fort aux thèses. Garde-fous : sizing conservateur et journalisation systématique.
+Enthousiaste · Visionnaire
+4
+4
+4
+3
+3
+1
+3
+Biais de confirmation au plancher (1/10). Verrouillage total sur les thèses adoptées. Garde-fous : exposition minimale, sources contradictoires obligatoires, journalisation.
+Spéculateur · Analyste
+4
+4
+5
+2
+4
+4
+5
+Très exposé à l'excès de confiance — illusion de compétence. Garde-fous : sizing strict et marges d'erreur systématiques.
+Analyste · Spéculateur
+5
+5
+5
+2
+4
+4
+6
+Excès de confiance au plancher. Décisions rapides avec certitude injustifiée. Garde-fous : marges d'erreur dans chaque projection et règle de prise de profits systématique.
+Spéculateur · Conservateur
+4
+2
+3
+5
+5
+5
+7
+Vulnérabilité marquée au biais de disponibilité et à l'aversion à la perte. Garde-fous : délai de réflexion et routine de suivi régulière.
+Conservateur · Spéculateur
+6
+2
+4
+5
+5
+5
+6
+Vulnérable au biais de disponibilité. Prudence + réactivité amplifient l'impact émotionnel. Garde-fous : protocole de risque externe et limitation des sources d'information.
+Spéculateur · Enthousiaste
+1
+1
+3
+1
+4
+4
+5
+COMBINAISON LA PLUS EXPOSÉE. Plancher sur 3 biais : FOMO, disponibilité, excès de confiance (1/10). Garde-fous : exposition minimale, sizing plancher, positions limitées, journalisation obligatoire.
+Enthousiaste · Spéculateur
+1
+2
+4
+2
+5
+4
+5
+FOMO au plancher (1/10). Excès de confiance et disponibilité très faibles. Garde-fous : cadre analytique strict, sizing minimal, délai obligatoire avant chaque décision.
+Analyste · Conservateur
+8
+5
+5
+5
+4
+4
+6
+COMBINAISON LA PLUS ROBUSTE. Jamais en dessous de 4/10. FOMO fort (8/10). Garde-fous : flexibilité dans les scénarios et contrôle fondamental régulier.
+Conservateur · Analyste
+8
+4
+4
+5
+4
+4
+6
+Bien protégé contre le FOMO (8/10). Profil équilibré. Garde-fous : routine de suivi et règles d'ajustement d'exposition prédéfinies.
+Analyste · Enthousiaste
+5
+4
+5
+1
+4
+2
+4
+Excès de confiance au plancher (1/10). Certitude maximale sans fondement solide. Garde-fous : marges d'erreur larges et remise en question systématique.
+Enthousiaste · Analyste
+4
+4
+4
+2
+3
+2
+5
+Très exposé à l'excès de confiance et au biais de confirmation. L'Enthousiaste adopte les outils sans en mesurer les limites. Garde-fous : sizing conservateur et validation fondamentale systématique.
+Conservateur · Enthousiaste
+6
+1
+2
+5
+4
+4
+6
+Biais de disponibilité au plancher (1/10). Aversion à la perte critique (2/10). Prudence + inexpérience = paralysie. Garde-fous : exposition progressive par paliers et routine de suivi obligatoire.
+Enthousiaste · Conservateur
+4
+2
+2
+4
+5
+4
+5
+Vulnérable au biais de disponibilité et à l'aversion à la perte (2/10). Cycle d'inaction puis rupture impulsive. Garde-fous : exposition conservatrice, sizing minimal, journalisation systématique.
+
+7. Spécifications Techniques
+Stack originale
+Framework : Next.js (React)
+Graphique radar : Recharts — RadarChart
+Hébergement : quiz-psychologique.rifters.fr
+États de l'application
+"intro"  → page d'accueil avec bouton Commencer
+"quiz"   → questions une par une + bouton retour
+"results" → profil combiné + radar biais + vigilance + téléchargement PDF
+Logique de calcul (pseudocode)
+function calculateResults(answers) {
+  // 1. Moyennes par dimension
+  const scores = { O:0, C:0, E:0, A:0, N:0 };
+  QUESTIONS.forEach(q => scores[q.dim] += answers[q.id]);
+  Object.keys(scores).forEach(dim => scores[dim] /= 5);
+ 
+  // 2. Distance euclidienne
+  const ranked = PROFILES.map(p => ({
+    ...p,
+    dist: Math.sqrt(
+      (scores.O-p.O)**2 + (scores.C-p.C)**2 +
+      (scores.E-p.E)**2 + (scores.A-p.A)**2 + (scores.N-p.N)**2
+    )
+  })).sort((a,b) => a.dist - b.dist);
+ 
+  // 3. Profil combiné
+  const combinedKey = ranked[0].key + '_' + ranked[1].key;
+  return { scores, dominant: ranked[0], secondary: ranked[1],
+           biasData: COMBINED_PROFILES[combinedKey] };
+}
+Document généré le 30/04/2026 — 

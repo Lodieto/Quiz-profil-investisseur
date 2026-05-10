@@ -1,0 +1,226 @@
+/*
+  Lleco Design System — Colors & Type
+  Source: codebase Lodieto/Lleco + palette OKLCH fournie.
+  All values mirror the Tailwind config in client/.
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap");
+
+:root {
+  /* ── Backgrounds ─────────────────────────────── */
+  --lleco-dark:        #0a0f1c;   /* base */
+  --lleco-dark-card:   #111827;   /* cards */
+  --lleco-dark-alt:    #1a1f2e;   /* alternated section */
+
+  /* ── Text ────────────────────────────────────── */
+  --lleco-text:        #e8edf5;   /* main copy */
+  --lleco-text-muted:  #94a3b8;   /* secondary, captions */
+  --lleco-text-faint:  rgba(232, 237, 245, 0.4);
+
+  /* ── Accents (pastels clairs) ────────────────── */
+  --lleco-turquoise:   #a8e2d2;   /* Conseil — primary CTA  · oklch(0.88 0.06 175) */
+  --lleco-green:       #bfdf95;   /* Formation              · oklch(0.87 0.10 125) */
+  --lleco-orange:      #f4be8e;   /* Développement          · oklch(0.83 0.09 65)  */
+  /* legacy (plus saturés) — disponibles si besoin */
+  --lleco-turquoise-deep: #7dd3c0;
+  --lleco-green-deep:     #a8d860;
+  --lleco-orange-deep:    #f4a261;
+
+  /* ── Surface tokens (glass cards, borders) ───── */
+  --lleco-surface:        rgba(255, 255, 255, 0.03);
+  --lleco-surface-strong: rgba(255, 255, 255, 0.06);
+  --lleco-border:         rgba(255, 255, 255, 0.08);
+  --lleco-border-strong:  rgba(255, 255, 255, 0.14);
+
+  /* ── Radii ───────────────────────────────────── */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --r-pill: 999px;
+
+  /* ── Spacing scale ───────────────────────────── */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-28: 112px;
+
+  /* ── Shadows ─────────────────────────────────── */
+  --shadow-card:     0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 24px rgba(0,0,0,0.25);
+  --shadow-hover-t:  0 12px 40px rgba(125, 211, 192, 0.10);
+  --shadow-hover-g:  0 12px 40px rgba(168, 216,  96, 0.10);
+  --shadow-hover-o:  0 12px 40px rgba(244, 162,  97, 0.10);
+  --glow-cta:        0 0 30px rgba(125, 211, 192, 0.30);
+
+  /* ── Type ────────────────────────────────────── */
+  --font-display: "Satoshi", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body:    "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono:    ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  /* type scale (clamp for fluid) */
+  --t-xs:   12px;
+  --t-sm:   14px;
+  --t-base: 16px;
+  --t-lg:   18px;
+  --t-xl:   20px;
+  --t-2xl:  clamp(22px, 2.5vw, 28px);
+  --t-3xl:  clamp(28px, 3.5vw, 36px);
+  --t-4xl:  clamp(36px, 5vw,   48px);
+  --t-5xl:  clamp(44px, 6.5vw, 64px);
+  --t-6xl:  clamp(56px, 8.5vw, 88px);
+
+  --lh-tight:   1.1;
+  --lh-snug:    1.25;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.65;
+
+  --tracking-tight: -0.02em;
+  --tracking-wider: 0.08em;
+
+  /* ── Motion ──────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft:   cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:    150ms;
+  --dur-base:    300ms;
+  --dur-slow:    700ms;
+}
+
+/* ─────────────────────────────────────────────── */
+/* Semantic element styles                         */
+/* ─────────────────────────────────────────────── */
+
+html, body {
+  background: var(--lleco-dark);
+  color: var(--lleco-text);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  line-height: var(--lh-relaxed);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, .display {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-tight);
+  color: var(--lleco-text);
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--t-6xl); font-weight: 700; }
+h2 { font-size: var(--t-4xl); font-weight: 700; }
+h3 { font-size: var(--t-2xl); font-weight: 700; }
+h4 { font-size: var(--t-xl);  font-weight: 600; }
+
+p, li {
+  color: var(--lleco-text-muted);
+  font-size: var(--t-base);
+  line-height: var(--lh-relaxed);
+  text-wrap: pretty;
+}
+
+small, .caption { font-size: var(--t-sm); color: var(--lleco-text-muted); }
+.eyebrow {
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--lleco-text-muted);
+}
+code, kbd { font-family: var(--font-mono); font-size: 0.9em; }
+
+a { color: var(--lleco-turquoise); text-decoration: none; transition: color var(--dur-base) var(--ease-out); }
+a:hover { color: var(--lleco-text); }
+
+/* ─────────────────────────────────────────────── */
+/* Utility classes                                 */
+/* ─────────────────────────────────────────────── */
+
+.glass-card {
+  background: var(--lleco-surface);
+  border: 1px solid var(--lleco-border);
+  border-radius: var(--r-lg);
+  padding: var(--s-6) var(--s-6);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--lleco-border-strong);
+}
+.glass-card[data-accent="turquoise"]:hover { border-color: rgba(125,211,192,0.30); box-shadow: var(--shadow-hover-t); }
+.glass-card[data-accent="green"]:hover     { border-color: rgba(168,216, 96,0.30); box-shadow: var(--shadow-hover-g); }
+.glass-card[data-accent="orange"]:hover    { border-color: rgba(244,162, 97,0.30); box-shadow: var(--shadow-hover-o); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--t-sm);
+  padding: 14px 28px;
+  border-radius: var(--r-md);
+  transition: transform var(--dur-base) var(--ease-out),
+              background var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-primary   { background: var(--lleco-turquoise); color: var(--lleco-dark); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: var(--glow-cta); background: color-mix(in oklch, var(--lleco-turquoise) 92%, white); }
+.btn-secondary { background: transparent; color: var(--lleco-text); border-color: var(--lleco-border); }
+.btn-secondary:hover { background: var(--lleco-surface); border-color: var(--lleco-border-strong); }
+.btn-ghost     { background: transparent; color: var(--lleco-turquoise); padding: 8px 0; }
+.btn-ghost:hover { gap: 12px; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  background: var(--lleco-surface);
+  color: var(--lleco-text-muted);
+  border: 1px solid var(--lleco-border);
+}
+.badge--turquoise { color: var(--lleco-turquoise); background: rgba(125,211,192,0.08); border-color: rgba(125,211,192,0.20); }
+.badge--green     { color: var(--lleco-green);     background: rgba(168,216, 96,0.08); border-color: rgba(168,216, 96,0.20); }
+.badge--orange    { color: var(--lleco-orange);    background: rgba(244,162, 97,0.08); border-color: rgba(244,162, 97,0.20); }
+
+.input {
+  width: 100%;
+  background: var(--lleco-surface);
+  border: 1px solid var(--lleco-border);
+  border-radius: var(--r-md);
+  color: var(--lleco-text);
+  padding: 12px 14px;
+  font: inherit;
+  transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.input:focus {
+  outline: none;
+  border-color: rgba(125,211,192,0.50);
+  box-shadow: 0 0 0 3px rgba(125,211,192,0.15);
+}
+
+.section-dark     { background: var(--lleco-dark); }
+.section-dark-alt { background: var(--lleco-dark-alt); }
+.section-card     { background: var(--lleco-dark-card); }
+
+/* Slogan signature: A & I in accent color */
+.signature .a, .signature .i { font-weight: 800; }
+.signature .auto .a, .signature .auto .i { color: var(--lleco-turquoise); }
+.signature .ope  .a, .signature .ope  .i { color: var(--lleco-green); }
+.signature .act  .a, .signature .act  .i { color: var(--lleco-orange); }
