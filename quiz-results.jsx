@@ -177,12 +177,15 @@ function Results({ data, result, onRestart }) {
           <div className="ranking-label">Proximité aux 5 archétypes</div>
           <div className="ranking-bars">
             {ranked.map((p, i) => {
-              const maxDist = ranked[ranked.length - 1].dist || 1;
-              const closeness = 1 - (p.dist / (maxDist + 0.0001));
+              const minDist = ranked[0].dist;
+              const maxDist = ranked[ranked.length - 1].dist;
+              const range = maxDist - minDist || 1;
+              const closeness = 1 - (p.dist - minDist) / range;
+              const barWidth = 18 + closeness * 82; // dominant=100%, farthest=18%
               return (
                 <div key={p.key} className={`rk-row${i === 0 ? ' rk-dom' : ''}${i === 1 ? ' rk-sec' : ''}`}>
                   <span className="rk-name">{p.short}</span>
-                  <div className="rk-track"><div className="rk-fill" data-accent={p.accent} style={{ width: `${Math.max(8, closeness * 100)}%` }} /></div>
+                  <div className="rk-track"><div className="rk-fill" data-accent={p.accent} style={{ width: `${barWidth}%` }} /></div>
                   <span className="rk-dist">{p.dist.toFixed(2)}</span>
                 </div>
               );
