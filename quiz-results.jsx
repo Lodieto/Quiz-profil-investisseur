@@ -177,11 +177,7 @@ function Results({ data, result, onRestart }) {
           <div className="ranking-label">Proximité aux 5 archétypes</div>
           <div className="ranking-bars">
             {ranked.map((p, i) => {
-              const minDist = ranked[0].dist;
-              const maxDist = ranked[ranked.length - 1].dist;
-              const range = maxDist - minDist || 1;
-              const closeness = 1 - (p.dist - minDist) / range;
-              const barWidth = 18 + closeness * 82; // dominant=100%, farthest=18%
+              const barWidth = Math.max(2, (1 - p.dist / 5) * 100);
               return (
                 <div key={p.key} className={`rk-row${i === 0 ? ' rk-dom' : ''}${i === 1 ? ' rk-sec' : ''}`}>
                   <span className="rk-name">{p.short}</span>
