@@ -22,7 +22,7 @@
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 
 <script type="text/babel">
-const { useState, useEffect, useMemo } = React;
+const { useState, useEffect, useMemo, startTransition } = React;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "vibe": "clinique",
@@ -58,12 +58,11 @@ function App() {
     return calculateResults(answers, data);
   }, [answers]);
 
-  const goStart = () => setStage('quiz');
-  const goResults = () => { if (result) setStage('results'); };
+  const goStart = () => startTransition(() => setStage('quiz'));
+  const goResults = () => { if (result) startTransition(() => setStage('results')); };
   const restart = () => {
     if (!confirm("Refaire le quiz ? Vos réponses actuelles seront effacées.")) return;
-    setAnswers({});
-    setStage('intro');
+    startTransition(() => { setAnswers({}); setStage('intro'); });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
