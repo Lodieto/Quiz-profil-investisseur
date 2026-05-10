@@ -119,7 +119,7 @@ function OceanBars({ scores, dimensions }) {
   );
 }
 
-function Results({ data, result, onRestart }) {
+function Results({ data, result, onRestart, confirmRestart }) {
   const { dominant, secondary, scores, combo, ranked } = result;
   const { BIASES, DIMENSIONS, PORTRAIT_ROBOT } = data;
   const { PROFILE_GLYPH } = window.QUIZ_ENGINE;
@@ -172,17 +172,24 @@ function Results({ data, result, onRestart }) {
           ))}
         </div>
 
-        {/* Distance ranking — show how close other profiles are */}
+        {/* Distance ranking */}
         <div className="ranking">
           <div className="ranking-label">Proximité aux 5 archétypes</div>
           <div className="ranking-bars">
             {ranked.map((p, i) => {
-              const barWidth = Math.max(2, (1 - p.dist / 5) * 100);
+              const MAX_DIST = Math.sqrt(80); // theoretical max in 5D OCEAN (dims 1–5)
+              const proximity = Math.max(0, (1 - p.dist / MAX_DIST) * 100);
+              const label = i === 0 ? 'Dominant' : i === 1 ? 'Secondaire' : null;
               return (
                 <div key={p.key} className={`rk-row${i === 0 ? ' rk-dom' : ''}${i === 1 ? ' rk-sec' : ''}`}>
-                  <span className="rk-name">{p.short}</span>
-                  <div className="rk-track"><div className="rk-fill" data-accent={p.accent} style={{ width: `${barWidth}%` }} /></div>
-                  <span className="rk-dist">{p.dist.toFixed(2)}</span>
+                  <div className="rk-left">
+                    <span className="rk-name">{p.short}</span>
+                    {label && <span className="rk-badge" data-accent={p.accent}>{label}</span>}
+                  </div>
+                  <div className="rk-track">
+                    <div className="rk-fill" data-accent={p.accent} style={{ width: `${proximity}%` }} />
+                  </div>
+                  <span className="rk-pct">{Math.round(proximity)}<span className="rk-pct-unit">%</span></span>
                 </div>
               );
             })}
@@ -343,9 +350,9 @@ function Results({ data, result, onRestart }) {
 
       {/* Footer actions */}
       <section className="res-actions">
-        <button className="btn btn-secondary" onClick={onRestart}>
+        <button className={`btn ${confirmRestart ? 'btn-primary' : 'btn-secondary'}`} onClick={onRestart}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
-          Refaire le quiz
+          {confirmRestart ? 'Confirmer ?' : 'Refaire le quiz'}
         </button>
         <button className="btn btn-primary" onClick={() => window.print()}>
           Télécharger le PDF <span className="arr">→</span>
