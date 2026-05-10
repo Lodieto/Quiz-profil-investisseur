@@ -7,6 +7,31 @@ html, body { min-height: 100vh; }
 body { background: var(--lleco-dark); overflow-x: hidden; }
 button { font-family: inherit; }
 
+@keyframes orb-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.55; transform: scale(1.09); }
+}
+
+/* Persistent background orbs — visible on all screens */
+body::before {
+  content: '';
+  position: fixed; top: -120px; left: -120px;
+  width: 520px; height: 520px; border-radius: 50%;
+  background: var(--lleco-turquoise);
+  filter: blur(150px); opacity: 0.09;
+  pointer-events: none; z-index: 0;
+  animation: orb-pulse 7s ease-in-out infinite;
+}
+body::after {
+  content: '';
+  position: fixed; bottom: 10%; right: -80px;
+  width: 420px; height: 420px; border-radius: 50%;
+  background: var(--lleco-orange);
+  filter: blur(130px); opacity: 0.07;
+  pointer-events: none; z-index: 0;
+  animation: orb-pulse 9s ease-in-out infinite 2.5s;
+}
+
 /* ── TWEAK: Density (compress / breathe) ─────── */
 :root { --density: 1; }
 
@@ -110,10 +135,8 @@ button { font-family: inherit; }
 
 .app-shell {
   min-height: 100vh;
-  background:
-    radial-gradient(1100px 600px at 80% -200px, rgba(125,211,192,0.06), transparent 70%),
-    radial-gradient(900px 500px at -100px 30%, rgba(168,216,96,0.05), transparent 70%),
-    var(--lleco-dark);
+  position: relative; z-index: 1;
+  background: var(--lleco-dark);
 }
 
 /* ── Top nav bar ─────────────────────────────── */
@@ -140,10 +163,10 @@ button { font-family: inherit; }
 
 /* ── Intro ───────────────────────────────────── */
 .intro-wrap { position: relative; padding: 80px 32px 120px; max-width: 1180px; margin: 0 auto; }
-.intro-orb { position: absolute; width: 380px; height: 380px; border-radius: 50%; filter: blur(110px); opacity: 0.18; pointer-events: none; }
-.orb-t { top: -100px; left: -80px; background: var(--lleco-turquoise); }
-.orb-g { top: 150px; right: -100px; background: var(--lleco-green); opacity: 0.14; }
-.orb-o { bottom: -50px; left: 30%; background: var(--lleco-orange); opacity: 0.12; }
+.intro-orb { position: absolute; width: 380px; height: 380px; border-radius: 50%; filter: blur(110px); pointer-events: none; }
+.orb-t { top: -100px; left: -80px; background: var(--lleco-turquoise); opacity: 0.18; animation: orb-pulse 6s ease-in-out infinite; }
+.orb-g { top: 150px; right: -100px; background: var(--lleco-green); opacity: 0.13; animation: orb-pulse 8s ease-in-out infinite 1s; }
+.orb-o { bottom: -50px; left: 30%; background: var(--lleco-orange); opacity: 0.11; animation: orb-pulse 10s ease-in-out infinite 3s; }
 .intro-inner { position: relative; }
 
 .intro-eyebrow {
